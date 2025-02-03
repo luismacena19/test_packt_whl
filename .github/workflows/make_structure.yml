@@ -37,7 +37,7 @@ jobs:
         # Rodar o script com o nome do pacote e autor
         python create_package_tree.py $PACKAGE_NAME "$AUTHOR"
 
-      - name: Configurar Git para commit
+    - name: Configurar Git para commit
       run: |
         git config --global user.name "${{ github.actor }}"
         git config --global user.email "${{ github.actor }}@users.noreply.github.com"  # GitHub utiliza esse e-mail de "noreply"
