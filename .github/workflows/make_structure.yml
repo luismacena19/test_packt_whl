@@ -37,3 +37,15 @@ jobs:
         # Rodar o script com o nome do pacote e autor
         python create_package_tree.py $PACKAGE_NAME "$AUTHOR"
 
+      - name: Configurar Git para commit
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"  # GitHub utiliza esse e-mail de "noreply"
+
+    - name: Commitar e push das mudanças
+      run: |
+        git add .  # Adiciona todos os arquivos modificados/criados
+        git commit -m "Criação da estrutura do pacote $PACKAGE_NAME" || echo "Nada para commit"
+        git push origin main  # Push para a branch principal (main)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usando o token do GitHub Actions para autorizar o push
