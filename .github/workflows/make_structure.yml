@@ -51,6 +51,6 @@ jobs:
       run: |
         git add .  # Adiciona todos os arquivos modificados/criados
         git commit -m "Criação da estrutura do pacote $PACKAGE_NAME" || echo "Nada para commit"
-        git push origin main  # Push para a branch principal (main)
+        git push origin develop  # Push para a branch principal (main)
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usando o token do GitHub Actions para autorizar o push
