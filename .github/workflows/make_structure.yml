@@ -9,7 +9,8 @@ on:
     branches:
       - main
 permissions:
-  actions: write
+  contents: read
+  pages: write
 jobs:
 
   build:
