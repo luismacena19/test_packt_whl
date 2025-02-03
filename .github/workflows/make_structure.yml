@@ -10,8 +10,7 @@ on:
       - main
 
 permissions:
-  contents: read
-  pages: write
+  contents: write
 
 jobs:
 
