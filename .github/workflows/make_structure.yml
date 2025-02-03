@@ -3,7 +3,7 @@ name: Criar Estrutura de Pacote Python
 on:
   push:
     branches:
-      - main
+      - develop
       - master
   pull_request:
     branches:
