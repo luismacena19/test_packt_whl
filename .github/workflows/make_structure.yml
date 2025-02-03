@@ -35,9 +35,9 @@ jobs:
         AUTHOR="${{ github.actor }}"  # Obtém o nome de usuário do GitHub
         echo "######"
         echo "ls:"
-        echo ls
+        ls
         echo "pwd:"
-        echo pwd
+        pwd
         echo "######"
         # Rodar o script com o nome do pacote e autor
         python create_package_tree.py $PACKAGE_NAME "$AUTHOR"
