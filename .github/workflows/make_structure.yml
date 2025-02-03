@@ -8,6 +8,7 @@ on:
   pull_request:
     branches:
       - main
+
 permissions:
   contents: read
   pages: write
@@ -19,7 +20,7 @@ jobs:
 
     steps:
     - name: Verificar código do repositório
-      uses: actions/checkout@v4
+      uses: actions/checkout@v3
 
     - name: Configurar o Python
       uses: actions/setup-python@v2
