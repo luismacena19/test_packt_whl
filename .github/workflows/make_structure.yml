@@ -33,7 +33,12 @@ jobs:
         PACKAGE_NAME="${{ github.repository }}"  # Obtém o nome do repositório
         PACKAGE_NAME="${PACKAGE_NAME#*/}"  # Remove o "usuário/" para pegar só o nome do repositório
         AUTHOR="${{ github.actor }}"  # Obtém o nome de usuário do GitHub
-
+        echo "######"
+        echo "ls:"
+        echo ls
+        echo "pwd:"
+        echo pwd
+        echo "######"
         # Rodar o script com o nome do pacote e autor
         python create_package_tree.py $PACKAGE_NAME "$AUTHOR"
 
