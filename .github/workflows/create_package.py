@@ -137,9 +137,8 @@ if __name__ == "__main__":
             if (
                 str(file).startswith(".") or
                 str(file) == "__pycache__" or
-                str(file) == package_name or
-                str(file) == "create_package_tree.py"
-                    ):
+                str(file) == package_name
+            ):
                 pass
             else:
                 origin = f"./{file}"

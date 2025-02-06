@@ -1,0 +1,44 @@
+name: Criar Estrutura de Pacote Python
+
+on:
+  pull_request:
+    branches:
+      - main
+      - master
+
+permissions:
+  contents: write
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest  # Ambiente para rodar o script
+
+    steps:
+    - name: Verificar código do repositório
+      uses: actions/checkout@v3
+
+    - name: Configurar o Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'  # Defina a versão do Python que você deseja usar
+
+    - name: Instalar dependências
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel twine # Instala o setuptools e wheel necessário para o script
+
+    - name: Rodar o comando para publicar o pacote
+      run: |
+        # Extrai o nome do repositório e o nome do autor
+        PACKAGE_NAME="${{ github.repository }}"  # Obtém o nome do repositório
+        PACKAGE_NAME="${PACKAGE_NAME#*/}"  # Remove o "usuário/" para pegar só o nome do repositório
+        AUTHOR="${{ github.actor }}"  # Obtém o nome de usuário do GitHub
+      with:
+        username: $%{{ secretes.USERNAME }}
+        url: ${{ secrets.URL }}
+        password: ${{ secrets.PASSWORD }}
+     
+        # Rodar o script com o nome do pacote e autor
+        echo "python3 -m twine upload --repository-url '${url}' --username '${username\}' --password '${password}' '${PACKAGE_NAME}/dist/' " 
+
