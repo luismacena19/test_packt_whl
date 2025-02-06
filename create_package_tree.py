@@ -8,8 +8,8 @@ def create_package_tree(package_name, autor="Seu Nome"):
     os.makedirs(package_name, exist_ok=True)
     os.makedirs(f"{package_name}/{package_name}", exist_ok=True)  # Diretório para o código do pacote
 
-    gitignore_path = f"{package_name}/.gitignore"
-    setup_content_path =f"{package_name}/setup.py"
+    gitignore_path = ".gitignore"
+    setup_content_path = f"{package_name}/setup.py"
     readme_path = f"{package_name}/README.md"
     license_path = f"{package_name}/LICENSE"
 
