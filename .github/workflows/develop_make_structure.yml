@@ -1,0 +1,50 @@
+name: Criar Estrutura de Pacote Python
+
+on:
+  push:
+    branches:
+      - develop
+
+permissions:
+  contents: write
+
+jobs:
+
+  build:
+    runs-on: ubuntu-latest  # Ambiente para rodar o script
+
+    steps:
+    - name: Verificar código do repositório
+      uses: actions/checkout@v3
+
+    - name: Configurar o Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9'  # Defina a versão do Python que você deseja usar
+
+    - name: Instalar dependências
+      run: |
+        python -m pip install --upgrade pip
+        pip install setuptools wheel # Instala o setuptools e wheel necessário para o script
+
+    - name: Rodar o script de criação de pacotes
+      run: |
+        # Extrai o nome do repositório e o nome do autor
+        PACKAGE_NAME="${{ github.repository }}"  # Obtém o nome do repositório
+        PACKAGE_NAME="${PACKAGE_NAME#*/}"  # Remove o "usuário/" para pegar só o nome do repositório
+        AUTHOR="${{ github.actor }}"  # Obtém o nome de usuário do GitHub
+        # Rodar o script com o nome do pacote e autor
+        python .github/workflows/create_package.py $PACKAGE_NAME "$AUTHOR"
+
+    - name: Configurar Git para commit
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"  # GitHub utiliza esse e-mail de "noreply"
+
+    - name: Commitar e push das mudanças
+      run: |
+        git add .  # Adiciona todos os arquivos modificados/criados
+        git commit -m "Criação da estrutura do pacote $PACKAGE_NAME" || echo "Nada para commit"
+        git push origin develop  # Push para a branch principal (main)
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Usando o token do GitHub Actions para autorizar o push

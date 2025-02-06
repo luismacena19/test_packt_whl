@@ -1,0 +1,9 @@
+LICENSE
+README.md
+setup.py
+test_packt_whl/__init__.py
+test_packt_whl/upper_test.py
+test_packt_whl.egg-info/PKG-INFO
+test_packt_whl.egg-info/SOURCES.txt
+test_packt_whl.egg-info/dependency_links.txt
+test_packt_whl.egg-info/top_level.txt
