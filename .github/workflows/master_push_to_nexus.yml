@@ -30,12 +30,12 @@ jobs:
 
     - name: Rodar o comando para publicar o pacote
       with:
-        username: "${{ secrets.USERNAME }}"
-        url: "${{ secrets.URL }}"
-        password: "${{ secrets.PASSWORD }}"
+        username: ${{ secrets.USERNAME }}
+        url: ${{ secrets.URL }}
+        password: ${{ secrets.PASSWORD }}
       run: |
         # Extrai o nome do repositório e o nome do autor
         PACKAGE_NAME="${{ github.repository }}"  # Obtém o nome do repositório
         PACKAGE_NAME="${PACKAGE_NAME#*/}"  # Remove o "usuário/" para pegar só o nome do repositório
         AUTHOR="${{ github.actor }}"  # Obtém o nome de usuário do GitHub
-        echo $url 
+        echo "$url"
