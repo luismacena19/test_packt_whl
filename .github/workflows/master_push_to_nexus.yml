@@ -29,15 +29,13 @@ jobs:
         pip install setuptools wheel twine # Instala o setuptools e wheel necessário para o script
 
     - name: Rodar o comando para publicar o pacote
+      with:
+        username: "${{ secrets.USERNAME }}"
+        url: "${{ secrets.URL }}"
+        password: "${{ secrets.PASSWORD }}"
       run: |
         # Extrai o nome do repositório e o nome do autor
         PACKAGE_NAME="${{ github.repository }}"  # Obtém o nome do repositório
         PACKAGE_NAME="${PACKAGE_NAME#*/}"  # Remove o "usuário/" para pegar só o nome do repositório
         AUTHOR="${{ github.actor }}"  # Obtém o nome de usuário do GitHub
-      with:
-        username: "${{ secrets.USERNAME }}"
-        url: "${{ secrets.URL }}"
-        password: "${{ secrets.PASSWORD }}"
-     
-        # Rodar o script com o nome do pacote e autor
-        echo $url $username $password $PACKAGE_NAME
+        echo $url 
