@@ -1,19 +1,15 @@
 name: Publicando pacote
 
 on:
-    pull_request_review:
-      types: [submitted]
-    branches:
-      - master
-      - main
-
+  pull_request_review:
+    types: [submitted]
 permissions:
   contents: write
 
 jobs:
 
   build:
-    if: github.event.review.state == 'approved'
+    if: ( github.event.review.state == 'approved') and ( github.event.pull_request.base.ref == 'production' )
     runs-on: ubuntu-latest  # Ambiente para rodar o script
     steps:
     - name: Verificar código do repositório
