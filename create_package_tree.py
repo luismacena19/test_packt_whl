@@ -1,14 +1,23 @@
 import os
 import sys
+import shutil
+from pathlib import Path
 
 def create_package_tree(package_name, autor="Seu Nome"):
     # Crie o diretório do pacote
     os.makedirs(package_name, exist_ok=True)
     os.makedirs(f"{package_name}/{package_name}", exist_ok=True)  # Diretório para o código do pacote
 
-    # Crie o arquivo __init__.py dentro do diretório do pacote
-    with open(f"{package_name}/{package_name}/__init__.py", 'w') as f:
-        f.write(f"# {package_name} - Pacote Python\n")
+    gitignore_path = f"{package_name}/.gitignore"
+    setup_content_path =f"{package_name}/setup.py"
+    readme_path = f"{package_name}/README.md"
+    license_path = f"{package_name}/LICENSE"
+
+    if not os.path.exists('./__init__.py'):
+        print("Arquivo não existe")
+        # Crie o arquivo __init__.py dentro do diretório do pacote
+        with open(f"{package_name}/{package_name}/__init__.py", 'w') as f:
+            f.write(f"# {package_name} - Pacote Python\n")
 
     # Crie o arquivo setup.py
     setup_content = f"""from setuptools import setup, find_packages
@@ -31,15 +40,19 @@ setup(
     ],
 )
 """
-    with open(f"{package_name}/setup.py", 'w') as f:
-        f.write(setup_content)
+
+    if not os.path.exists(setup_content_path):
+        with open(setup_content_path, 'w') as f:
+            f.write(setup_content)
 
     # Crie o arquivo README.md
     readme_content = f"""# {package_name}
 
 Este é o pacote `{package_name}`. Adicione aqui uma descrição mais detalhada do seu pacote.
 """
-    with open(f"{package_name}/README.md", 'w') as f:
+    if not os.path.exists(readme_path):
+        print("Arquivo não existe")
+    with open(readme_path, 'w') as f:
         f.write(readme_content)
 
     # Crie o arquivo LICENSE (pode adicionar uma licença como MIT ou qualquer outra)
@@ -65,7 +78,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 """
-    with open(f"{package_name}/LICENSE", 'w') as f:
+    with open(license_path, 'w') as f:
         f.write(license_content)
 
     # Arquivo .gitignore (se necessário)
@@ -75,8 +88,10 @@ dist/
 build/
 *.egg-info
 """
-    with open(f"{package_name}/.gitignore", 'w') as f:
-        f.write(gitignore_content)
+    if not os.path.exists(gitignore_path):
+        print("Arquivo não existe")
+        with open(gitignore_path, 'w') as f:
+            f.write(gitignore_content)
 
     print(f"Estrutura do pacote '{package_name}' criada com sucesso!")
 
@@ -89,4 +104,15 @@ if __name__ == "__main__":
         # Verifica se o autor foi fornecido como o segundo argumento
         autor = sys.argv[2] if len(sys.argv) > 2 else "Seu Nome"
         create_package_tree(package_name, autor)
+
+        # Move arquivos
+        path = Path("./")
+        destination = f"{package_name}/{package_name}/"
+        for file in path.iterdir():
+            if str(file).startswith(".") or str(file) == "__pycache__" or str(file) == package_name:
+                pass
+            else:
+                origin = f"./{file}"
+                shutil.move(str(origin), str(destination))
+
 
