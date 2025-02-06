@@ -1,12 +1,11 @@
 name: Publicando pacote
 
 on:
-  pull_request:
+    pull_request_review:
+      types: [submitted]
     branches:
       - master
       - main
-    types:
-      - reviewed
 
 permissions:
   contents: write
@@ -14,8 +13,8 @@ permissions:
 jobs:
 
   build:
+    if: github.event.review.state == 'approved'
     runs-on: ubuntu-latest  # Ambiente para rodar o script
-
     steps:
     - name: Verificar código do repositório
       uses: actions/checkout@v3
