@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - develop
-      - master
-  pull_request:
-    branches:
-      - main
 
 permissions:
   contents: write
@@ -39,7 +35,7 @@ jobs:
         AUTHOR="${{ github.actor }}"  # Obtém o nome de usuário do GitHub
      
         # Rodar o script com o nome do pacote e autor
-        python create_package_tree.py $PACKAGE_NAME "$AUTHOR"
+        python .github/workflow/create_package.py $PACKAGE_NAME "$AUTHOR"
 
     - name: Configurar Git para commit
       run: |

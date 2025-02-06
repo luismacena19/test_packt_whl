@@ -96,21 +96,21 @@ build/
 
     print(f"Estrutura do pacote '{package_name}' criada com sucesso!")
 
-def criar_pacote_whl(diretorio_projeto):
+def create_whl_package(package_name):
     # Verifique se o diretório do projeto existe
-    if not os.path.isdir(diretorio_projeto):
-        print(f"Erro: O diretório {diretorio_projeto} não existe!")
+    if not os.path.isdir(package_name):
+        print(f"Erro: O diretório {package_name} não existe!")
         return
 
     # Navegue até o diretório do projeto
-    os.chdir(diretorio_projeto)
+    os.chdir(package_name)
 
     # Verifique se o arquivo setup.py está presente
     if not os.path.isfile("setup.py"):
         print("Erro: O arquivo 'setup.py' não encontrado no diretório.")
         return
 
-    print(f"Gerando o pacote .whl para o projeto '{diretorio_projeto}'...")
+    print(f"Gerando o pacote .whl para o projeto '{package_name}'...")
 
     # Execute o comando para gerar o pacote .whl usando setuptools e wheel
     try:
@@ -123,6 +123,7 @@ if __name__ == "__main__":
     # Verifica se o nome do pacote foi fornecido como argumento
     if len(sys.argv) < 2:
         print("Uso: python create_package_tree.py <package_name> [autor]")
+        sys.exit()
     else:
         package_name = sys.argv[1]
         # Verifica se o autor foi fornecido como o segundo argumento
@@ -133,11 +134,17 @@ if __name__ == "__main__":
         path = Path("./")
         destination = f"{package_name}/{package_name}/"
         for file in path.iterdir():
-            if str(file).startswith(".") or str(file) == "__pycache__" or str(file) == package_name or str(file) == "create_package_tree.py":
+            if (
+                str(file).startswith(".") or
+                str(file) == "__pycache__" or
+                str(file) == package_name or
+                str(file) == "create_package_tree.py"
+                    ):
                 pass
             else:
                 origin = f"./{file}"
                 shutil.move(str(origin), str(destination))
-
-    criar_pacote_whl(package_name)
-
+    try:
+        create_whl_package(package_name)
+    except Exception as e:
+        print(f"Erro ao empacotar script: {e}")
