@@ -40,5 +40,5 @@ jobs:
         password: ${{ secrets.PASSWORD }}
      
         # Rodar o script com o nome do pacote e autor
-        echo 'python3 -m twine upload --repository-url "${url}" --username "${username}" --password "${password}" "${PACKAGE_NAME}/dist/" ' 
+        echo "${url} ${username} ${password} ${PACKAGE_NAME}/dist/" 
 
