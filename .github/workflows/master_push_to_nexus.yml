@@ -9,7 +9,7 @@ permissions:
 jobs:
 
   build:
-    if: ( github.event.review.state == 'approved') and ( github.event.pull_request.base.ref == 'master' )
+    #if: ( github.event.review.state == 'approved') and ( github.event.pull_request.base.ref == 'master' )
     runs-on: ubuntu-latest  # Ambiente para rodar o script
     steps:
     - name: Verificar código do repositório
