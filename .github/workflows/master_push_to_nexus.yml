@@ -34,7 +34,9 @@ jobs:
         PACKAGE_NAME="${{ github.repository }}"  # Obtém o nome do repositório
         PACKAGE_NAME="${PACKAGE_NAME#*/}"  # Remove o "usuário/" para pegar só o nome do repositório
         AUTHOR="${{ github.actor }}"  # Obtém o nome de usuário do GitHub
+        echo "#######################"
         echo "$url"
+        echo "#######################"
       env:
         username: ${{ secrets.USERNAME }}
         url: ${{ secrets.URL }}
