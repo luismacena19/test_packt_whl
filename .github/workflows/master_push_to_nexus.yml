@@ -35,9 +35,9 @@ jobs:
         PACKAGE_NAME="${PACKAGE_NAME#*/}"  # Remove o "usuário/" para pegar só o nome do repositório
         AUTHOR="${{ github.actor }}"  # Obtém o nome de usuário do GitHub
       with:
-        username: ${{ secrets.USERNAME }}
-        url: ${{ secrets.URL }}
-        password: ${{ secrets.PASSWORD }}
+        username: "${{ secrets.USERNAME }}"
+        url: "${{ secrets.URL }}"
+        password: "${{ secrets.PASSWORD }}"
      
         # Rodar o script com o nome do pacote e autor
         echo "${url} ${username} ${password} ${PACKAGE_NAME}/dist/" 
