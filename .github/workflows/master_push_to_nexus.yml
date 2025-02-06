@@ -35,7 +35,7 @@ jobs:
         PACKAGE_NAME="${PACKAGE_NAME#*/}"  # Remove o "usuário/" para pegar só o nome do repositório
         AUTHOR="${{ github.actor }}"  # Obtém o nome de usuário do GitHub
         echo "#######################"
-        echo "$url"
+        echo 'python3 -m twine upload --repository-url "${url}" --username "${username}" --password "${password}" "${PACKAGE_NAME}/dist/" ' 
         echo "#######################"
       env:
         username: ${{ secrets.USERNAME }}
