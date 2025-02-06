@@ -2,6 +2,7 @@ import os
 import sys
 import shutil
 from pathlib import Path
+import subprocess
 
 def create_package_tree(package_name, autor="Seu Nome"):
     # Crie o diretório do pacote
@@ -95,6 +96,29 @@ build/
 
     print(f"Estrutura do pacote '{package_name}' criada com sucesso!")
 
+def criar_pacote_whl(diretorio_projeto):
+    # Verifique se o diretório do projeto existe
+    if not os.path.isdir(diretorio_projeto):
+        print(f"Erro: O diretório {diretorio_projeto} não existe!")
+        return
+
+    # Navegue até o diretório do projeto
+    os.chdir(diretorio_projeto)
+
+    # Verifique se o arquivo setup.py está presente
+    if not os.path.isfile("setup.py"):
+        print("Erro: O arquivo 'setup.py' não encontrado no diretório.")
+        return
+
+    print(f"Gerando o pacote .whl para o projeto '{diretorio_projeto}'...")
+
+    # Execute o comando para gerar o pacote .whl usando setuptools e wheel
+    try:
+        subprocess.check_call([sys.executable, "setup.py", "bdist_wheel"])
+        print("Pacote .whl gerado com sucesso!")
+    except subprocess.CalledProcessError as e:
+        print(f"Erro ao gerar o pacote: {e}")
+
 if __name__ == "__main__":
     # Verifica se o nome do pacote foi fornecido como argumento
     if len(sys.argv) < 2:
@@ -109,10 +133,11 @@ if __name__ == "__main__":
         path = Path("./")
         destination = f"{package_name}/{package_name}/"
         for file in path.iterdir():
-            if str(file).startswith(".") or str(file) == "__pycache__" or str(file) == package_name:
+            if str(file).startswith(".") or str(file) == "__pycache__" or str(file) == package_name or str(file) == "create_package_tree.py":
                 pass
             else:
                 origin = f"./{file}"
                 shutil.move(str(origin), str(destination))
 
+    criar_pacote_whl(package_name)
 
